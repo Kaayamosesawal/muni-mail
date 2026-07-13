@@ -1,0 +1,50 @@
+{
+  "name": "MuniCircle",
+  "icons": [
+  {
+    "src": "icon-192.png",
+    "type": "image/png",
+    "sizes": "192x192",
+    "purpose": "any"
+  },
+  {
+    "src": "icon-512.png",
+    "type": "image/png",
+    "sizes": "512x512",
+    "purpose": "any"
+  },
+  {
+    "src": "icon-maskable.png",
+    "type": "image/png",
+    "sizes": "512x512",
+    "purpose": "maskable"
+  }
+],
+
+  "screenshots": [
+  {
+    "src": "icon-maskable.png",
+    "sizes": "1366x768", 
+    "type": "image/png",
+    "form_factor": "narrow",
+    "label": "Mobile View"
+  },
+  {
+    "src": "icon-maskable.png",
+    "sizes": "1366x768",
+    "type": "image/png",
+    "form_factor": "wide",
+    "label": "Desktop View"
+  }
+],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#0659d5",
+  "background_color": "#e7ebef",
+  "status_bar": "default",
+  "orientation": "portrait",
+  "scope": "/",
+  "description": "Clubs and Associations Management Platform.",
+  "categories": ["education", "social", "productivity"],
+  "short_name": "MuniCircle"
+}

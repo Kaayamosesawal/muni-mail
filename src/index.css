@@ -1,0 +1,81 @@
+/* index.css */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@600;700;800;900&family=DM+Sans:wght@400;500;700&family=Inter:wght@400;500;600;700&family=Syne:wght@700;800;900&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* 1. Define the RAW RGB values (Numbers only) */
+  --brand-raw: 0, 102, 255;
+  --surface-raw: 255, 255, 255;
+  
+  /* 2. Define standard hex for normal use */
+  --brand: #0066FF;
+  --bg: #F8FAFC;
+  --surface: #FFFFFF;
+  --border: #E2E8F0;
+  --text-main: #0F172A;
+  
+  --font-heading: 'Poppins', 'Syne', sans-serif;
+  --font-body: 'Inter', 'DM Sans', sans-serif;
+  
+  --nav-height: 70px;
+  --container-px: 1rem;
+}
+
+@media (min-width: 768px) {
+  :root {
+    --nav-height: 85px;
+    --container-px: 2.5rem;
+  }
+}
+
+/* Dark Mode Raw Values */
+.dark, [data-theme="dark"] {
+  --surface-raw: 15, 23, 42;
+  --bg: #020617;
+  --surface: #0f172a;
+  --border: #334155;
+  --text-main: #F8FAFC;
+}
+
+@layer base {
+  body {
+    background-color: var(--bg);
+    color: var(--text-main);
+    @apply antialiased font-body;
+  }
+}
+
+@layer components {
+  /* This is where the error was. Use the -raw variable here. */
+  .nav-fixed {
+    @apply fixed top-0 left-0 w-full z-[100] backdrop-blur-xl border-b;
+    height: var(--nav-height);
+    background-color: rgba(var(--surface-raw), 0.85); /* CORRECTED */
+    border-color: var(--border);
+    padding: 0 var(--container-px);
+  }
+
+  .btn-muni {
+    background-color: var(--brand) !important;
+    color: white !important;
+    font-family: var(--font-heading);
+    @apply inline-flex items-center justify-center font-bold uppercase tracking-widest rounded-full transition-all;
+    @apply text-[9px] px-6 py-2.5 md:text-[10px] md:px-10 md:py-3.5;
+    /* Use raw for shadow too */
+    box-shadow: 0 10px 15px -3px rgba(var(--brand-raw), 0.2);
+  }
+
+  .muni-card {
+    background-color: var(--surface);
+    border: 1px solid var(--border);
+    @apply rounded-2xl shadow-sm overflow-hidden p-6 md:p-10;
+  }
+}
+
+@layer utilities {
+  .text-brand { color: var(--brand); }
+  .bg-brand { background-color: var(--brand); }
+}

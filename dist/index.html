@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <!-- Viewport optimized for PWA -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    
+    <title>MuniCircle</title>
+    <meta name="description" content="The unified platform for managing club activities, associations, and finances at Muni University." />
+
+    <!-- External Assets & Icons -->
+    <link 
+      rel="stylesheet" 
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" 
+      integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" 
+      crossorigin="anonymous" 
+      referrerpolicy="no-referrer" 
+    />
+    <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/Kaayamosesawal/images/main/muni_2.png">
+    
+    <!-- PWA & Mobile Optimization -->
+    <link rel="manifest" href="/manifest.json" />
+    <meta name="theme-color" content="#0066FF" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="MuniCircle" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <link rel="apple-touch-icon" href="/icon-192.png" />
+
+    <!-- Brand Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link 
+      href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;700&family=Poppins:wght@900&display=swap" 
+      rel="stylesheet"
+    >
+
+    <style>
+      :root {
+        --brand: #0066FF;
+        --bg: #F8FAFC;
+        --text: #0F172A;
+      }
+
+      body {
+        margin: 0;
+        padding: 0;
+        background-color: var(--bg);
+        overflow-x: hidden;
+      }
+
+      /* MuniCircle Premium Loader */
+      #initial-loader {
+        display: flex;
+        height: 100vh;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        font-family: 'Syne', sans-serif;
+        font-weight: 800;
+        color: var(--text);
+        letter-spacing: -0.04em;
+        background-color: var(--bg);
+      }
+
+      .loader-content {
+        text-align: center;
+      }
+
+      .brand-name {
+        font-size: 2rem;
+        margin-bottom: 10px;
+      }
+
+      .dot { 
+        color: var(--brand); 
+      }
+
+      /* Smooth Progress Bar */
+      .loader-track {
+        width: 120px;
+        height: 4px;
+        background: #E2E8F0;
+        border-radius: 10px;
+        margin: 10px auto 0;
+        overflow: hidden;
+        position: relative;
+      }
+
+      .loader-fill {
+        width: 40%;
+        height: 100%;
+        background: var(--brand);
+        position: absolute;
+        border-radius: 10px;
+        animation: flow 1.4s infinite cubic-bezier(0.65, 0, 0.35, 1);
+      }
+
+      @keyframes flow {
+        0% { left: -40%; }
+        100% { left: 100%; }
+      }
+
+      .antialiased {
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+      }
+    </style>
+    <script type="module" crossorigin src="/assets/index-BDd47aR3.js"></script>
+    <link rel="stylesheet" crossorigin href="/assets/index-CpSrg_Xr.css">
+  </head>
+  <body class="antialiased">
+    <div id="root">
+      <!-- Loading screen displays until React Main.jsx mounts -->
+      <div id="initial-loader">
+        <div class="loader-content">
+          <div class="brand-name">Muni<span class="dot">Circle</span></div>
+          <div class="loader-track">
+            <div class="loader-fill"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </body>
+</html>
