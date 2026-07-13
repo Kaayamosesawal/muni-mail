@@ -41,11 +41,13 @@ const NODE_ENV      = process.env.NODE_ENV || 'development';
 
 // Base URL of the deployed frontend, used to build the "Open MuniCircle" link
 // in the welcome email.
-const APP_BASE_URL = (process.env.CLIENT_ORIGIN || 'https://municircle-d2dcc.web.app').replace(/\/$/, '');
+const APP_BASE_URL = (process.env.CLIENT_ORIGIN || 'https://municircle.app').replace(/\/$/, '');
 
 const ALLOWED_ORIGINS = [
   'http://localhost:3000',
   'http://localhost:5173',
+  'https://municircle-d2dcc.web.app',
+  'https://municircle-d2dcc.firebaseapp.com', // Firebase Hosting's default second domain
   process.env.CLIENT_ORIGIN,
 ].filter(Boolean);
 
@@ -211,7 +213,7 @@ const buildEmailHtml = (title, bodyHtml, recipientEmail = '') => `<!DOCTYPE html
             <!-- TODO: fill in Muni University's official P.O. Box / postal address -->
             <p style="margin:0 0 6px;font-size:11px;color:#94a3b8;line-height:1.6;
                       font-family:Arial,Helvetica,sans-serif;">
-              P.O. Box [XXX], Arua, Uganda
+             Arua, Uganda
             </p>
             <p style="margin:0 0 10px;font-size:11px;color:#94a3b8;line-height:1.6;
                       font-family:Arial,Helvetica,sans-serif;">
@@ -228,8 +230,8 @@ const buildEmailHtml = (title, bodyHtml, recipientEmail = '') => `<!DOCTYPE html
             <p style="margin:0 0 4px;font-size:11px;color:#cbd5e1;line-height:1.6;
                       font-family:Arial,Helvetica,sans-serif;">
               Built &amp; maintained by [Developer Name] &nbsp;&middot;&nbsp;
-              <a href="mailto:[dev-email@example.com]" style="color:#cbd5e1;text-decoration:underline;">[dev-email@example.com]</a>
-              &nbsp;&middot;&nbsp; [+256 XXX XXX XXX]
+              <a href="mailto:2301200112@muni.ac.ug]" style="color:#cbd5e1;text-decoration:underline;">developer@municircle.com</a>
+              &nbsp;&middot;&nbsp; +256 761 060 363
             </p>
             ${recipientEmail ? `
             <p style="margin:8px 0 0;font-size:11px;color:#cbd5e1;font-family:Arial,Helvetica,sans-serif;">
