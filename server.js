@@ -41,7 +41,7 @@ const NODE_ENV      = process.env.NODE_ENV || 'development';
 
 // Base URL of the deployed frontend, used to build the "Open MuniCircle" link
 // in the welcome email.
-const APP_BASE_URL = (process.env.CLIENT_ORIGIN || 'https://municircle.app').replace(/\/$/, '');
+const APP_BASE_URL = (process.env.CLIENT_ORIGIN || 'https://municircle-d2dcc.web.app').replace(/\/$/, '');
 
 const ALLOWED_ORIGINS = [
   'http://localhost:3000',
