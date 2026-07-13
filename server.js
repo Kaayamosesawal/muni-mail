@@ -1,3 +1,24 @@
+/**
+ * server.js – MuniCircle Email API Server
+ *
+ * Small Node.js/Express server that sends the "Welcome to MuniCircle" email
+ * once a user finishes onboarding (see src/pages/Onboarding.jsx, which calls
+ * POST /api/send-email with { type: 'welcome', ... } right after it writes
+ * the user's profile to Firestore).
+ *
+ * Endpoints:
+ *   POST /api/send-email  – Dispatch the welcome email via Resend
+ *   GET  /api/health      – Health check for uptime monitors & Render keep-alive
+ *
+ * Environment variables (set in your hosting dashboard, never commit to git):
+ *   PORT                – HTTP port (Render/Heroku/etc. set this automatically)
+ *   CLIENT_ORIGIN        – Production frontend URL (e.g. https://municircle.app)
+ *   RESEND_API_KEY        – Your Resend API key
+ *   RESEND_FROM           – Sender address (must match your verified sending domain),
+ *                           e.g. "MuniCircle <welcome@municircle.app>"
+ *   RENDER_EXTERNAL_URL    – Set automatically by Render; used for keep-alive pings
+ */
+
 import 'dotenv/config';
 import express    from 'express';
 import { Resend } from 'resend';
@@ -20,7 +41,7 @@ const NODE_ENV      = process.env.NODE_ENV || 'development';
 
 // Base URL of the deployed frontend, used to build the "Open MuniCircle" link
 // in the welcome email.
-const APP_BASE_URL = (process.env.CLIENT_ORIGIN || 'https://municircle-d2dcc.web.app').replace(/\/$/, '');
+const APP_BASE_URL = (process.env.CLIENT_ORIGIN || 'https://municircle.app').replace(/\/$/, '');
 
 const ALLOWED_ORIGINS = [
   'http://localhost:3000',
@@ -57,7 +78,20 @@ const resend = new Resend(process.env.RESEND_API_KEY);
 console.log('[Email] ✅ Resend client initialized');
 
 // ─── Email HTML template ──────────────────────────────────────────────────────
-
+//
+//  Anti-spam enforcement layers applied:
+//  1. Full HTML5 DOCTYPE + XML namespaces (Outlook MSO compatibility)
+//  2. Preheader text — controls the snippet Gmail/Outlook show in the inbox
+//     list view, making the email look legitimate before it is even opened
+//  3. Table-only layout — CSS-heavy DIV layouts score poorly in spam filters
+//  4. Physical mailing address in footer (CAN-SPAM / GDPR requirement)
+//  5. "You received this because…" explanation — removes the "Why am I
+//     getting this?" confusion that causes spam reports
+//  6. Plain-text version sent alongside every email (see buildPlainText)
+//  7. reply_to set to a real monitored inbox — "noreply@" hurts reputation
+//  8. Precedence: transactional (not "bulk" which implies marketing)
+//  9. X-Entity-Ref-ID per send — prevents duplicate-detection false positives
+//
 const buildEmailHtml = (title, bodyHtml, recipientEmail = '') => `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
 <head>
@@ -216,7 +250,11 @@ const buildEmailHtml = (title, bodyHtml, recipientEmail = '') => `<!DOCTYPE html
 </html>`;
 
 // ─── Plain-text fallback builder ─────────────────────────────────────────────
-
+//
+//  Sending a text/plain alternative alongside the HTML part is one of the
+//  single most effective anti-spam measures. HTML-only emails with no text
+//  part are a strong spam signal in SpamAssassin, Gmail, and Outlook filters.
+//
 const buildPlainText = (title, name, extra = {}) => {
   const year     = new Date().getFullYear();
   const divider  = '─'.repeat(56);
@@ -245,7 +283,7 @@ const buildPlainText = (title, name, extra = {}) => {
     '',
     divider,
     `© ${year} MuniCircle — Muni University`,
-    'Arua, Uganda', 
+    'P.O. Box [XXX], Arua, Uganda', // TODO: fill in official P.O. Box
     `${FROM_ADDRESS}`,
     '',
     'Built & maintained by [Developer Name] — [dev-email@example.com] — [+256 XXX XXX XXX]', // TODO: fill in
